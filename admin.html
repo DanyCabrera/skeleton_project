@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Educativa - Administrador</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1d2b64, #f8cdda, #1d2b64);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            color: white;
+            font-size: 2.8rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: #e0e0e0;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .login-container, .register-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .login-form, .register-form {
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #1d2b64;
+            outline: none;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #1d2b64, #f8cdda);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .dashboard {
+            display: none;
+        }
+        
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-section h2 {
+            color: #1d2b64;
+            margin-bottom: 10px;
+        }
+        
+        .admin-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .info-item {
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .info-item i {
+            font-size: 2.5rem;
+            color: #1d2b64;
+            margin-bottom: 10px;
+        }
+        
+        .info-item h3 {
+            color: #f8cdda;
+            margin-bottom: 5px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            color: #1d2b64;
+            border-bottom: 3px solid #1d2b64;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .institutions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .institution-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+        }
+        
+        .institution-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .institution-header {
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        
+        .institution-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .institution-body {
+            padding: 20px;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1s ease-in-out;
+        }
+        
+        .math-progress .progress {
+            background: linear-gradient(to right, #1d2b64, #3a56c4);
+        }
+        
+        .language-progress .progress {
+            background: linear-gradient(to right, #f8cdda, #d9534f);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1d2b64;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .toggle-form {
+            text-align: center;
+            margin-top: 20px;
+            color: #1d2b64;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .toggle-form:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-bottom: 1px solid #eee;
+                border-left: 3px solid transparent;
+            }
+            
+            .tab.active {
+                border-bottom: 1px solid #eee;
+                border-left: 3px solid #1d2b64;
+            }
+            
+            .admin-info {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-cogs"></i> Plataforma Educativa</h1>
+            <p>Panel de Control para Administradores - Gestión Institucional</p>
+        </header>
+        
+        <main>
+            <!-- Formulario de Login -->
+            <div class="login-container" id="loginContainer">
+                <div class="card login-form">
+                    <h2 style="text-align: center; color: #1d2b64; margin-bottom: 25px;">Acceso para Administradores</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Correo Electrónico</label>
+                            <input type="email" id="loginEmail" placeholder="Ingresa tu correo" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Contraseña</label>
+                            <input type="password" id="loginPassword" placeholder="Ingresa tu contraseña" required>
+                        </div>
+                        
+                        <button type="submit" class="btn">Iniciar Sesión</button>
+                    </form>
+                    
+                    <div class="toggle-form" onclick="toggleForms()">
+                        ¿No tienes cuenta? Regístrate aquí
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Formulario de Registro -->
+            <div class="register-container" id="registerContainer" style="display: none;">
+                <div class="card register-form">
+                    <h2 style="text-align: center; color: #1d2b64; margin-bottom: 25px;">Registro de Administrador</h2>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="registerName">Nombre Completo</label>
+                            <input type="text" id="registerName" placeholder="Ingresa tu nombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="registerEmail">Correo Electrónico</label>
+                            <input type="email" id="registerEmail" placeholder="Ingresa tu correo" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="registerPassword">Contraseña</label>
+                            <input type="password" id="registerPassword" placeholder="Crea una contraseña" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirmar Contraseña</label>
+                            <input type="password" id="confirmPassword" placeholder="Confirma tu contraseña" required>
+                        </div>
+                        
+                        <button type="submit" class="btn">Registrarse</button>
+                    </form>
+                    
+                    <div class="toggle-form" onclick="toggleForms()">
+                        ¿Ya tienes cuenta? Inicia sesión aquí
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Dashboard del Administrador -->
+            <div class="dashboard" id="dashboard">
+                <div class="card">
+                    <div class="welcome-section">
+                        <h2>Bienvenido, <span id="adminName">Administrador</span>!</h2>
+                        <p>Panel de control para gestión institucional</p>
+                    </div>
+                    
+                    <div class="admin-info">
+                        <div class="info-item">
+                            <i class="fas fa-building"></i>
+                            <h3>Instituciones</h3>
+                            <p id="institutionsCount">8</p>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Promedio General</h3>
+                            <p id="averageScore">84.5%</p>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-users"></i>
+                            <h3>Usuarios Totales</h3>
+                            <p id="usersCount">1,240</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Pestañas de navegación -->
+                    <div class="tabs">
+                        <div class="tab active" data-tab="institutions">Instituciones</div>
+                        <div class="tab" data-tab="analytics">Análisis</div>
+                        <div class="tab" data-tab="reports">Reportes</div>
+                    </div>
+                    
+                    <!-- Contenido de las pestañas -->
+                    <div class="tab-content active" id="institutions-tab">
+                        <h2 style="color: #1d2b64; margin-bottom: 20px;">Progreso por Institución</h2>
+                        <div class="institutions-container" id="institutionsContainer">
+                            <!-- Las instituciones se cargarán aquí dinámicamente -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="analytics-tab">
+                        <h2 style="color: #1d2b64; margin-bottom: 20px;">Análisis de Rendimiento</h2>
+                        <div class="card">
+                            <h3>Comparativa de Instituciones</h3>
+                            <p>Gráfico comparativo de rendimiento por institución</p>
+                            <div style="height: 300px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 20px 0;">
+                                <p style="color: #666;">Gráfico de barras comparativo (simulación)</p>
+                            </div>
+                            
+                            <h3>Tendencias de Rendimiento</h3>
+                            <p>Evolución del rendimiento a lo largo del tiempo</p>
+                            <div style="height: 300px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 20px 0;">
+                                <p style="color: #666;">Gráfico de líneas de tendencias (simulación)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="reports-tab">
+                        <h2 style="color: #1d2b64; margin-bottom: 20px;">Reportes Detallados</h2>
+                        <div class="card">
+                            <h3>Generar Reporte</h3>
+                            <div class="form-group">
+                                <label for="reportType">Tipo de Reporte</label>
+                                <select id="reportType" style="padding: 10px; width: 100%; border: 1px solid #ddd; border-radius: 5px;">
+                                    <option value="institutions">Rendimiento por Institución</option>
+                                    <option value="courses">Rendimiento por Curso</option>
+                                    <option value="time">Evolución Temporal</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="reportPeriod">Período</label>
+                                <select id="reportPeriod" style="padding: 10px; width: 100%; border: 1px solid #ddd; border-radius: 5px;">
+                                    <option value="month">Último Mes</option>
+                                    <option value="quarter">Último Trimestre</option>
+                                    <option value="year">Último Año</option>
+                                </select>
+                            </div>
+                            
+                            <button class="btn" style="width: auto; display: inline-block;">Generar Reporte</button>
+                            
+                            <h3 style="margin-top: 30px;">Reportes Recientes</h3>
+                            <ul style="margin-top: 15px; padding-left: 20px;">
+                                <li style="margin-bottom: 10px;">Rendimiento Institucional - Junio 2023 (PDF)</li>
+                                <li style="margin-bottom: 10px;">Comparativa de Cursos - Mayo 2023 (Excel)</li>
+                                <li style="margin-bottom: 10px;">Evolución Temporal - Abril 2023 (PDF)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Función para alternar entre login y registro
+        function toggleForms() {
+            const loginContainer = document.getElementById('loginContainer');
+            const registerContainer = document.getElementById('registerContainer');
+            
+            if (loginContainer.style.display === 'none') {
+                loginContainer.style.display = 'flex';
+                registerContainer.style.display = 'none';
+            } else {
+                loginContainer.style.display = 'none';
+                registerContainer.style.display = 'flex';
+            }
+        }
+        
+        // Manejo del formulario de login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obtener valores del formulario
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Validar credenciales (simulación)
+            if (email && password) {
+                // Mostrar información del administrador
+                document.getElementById('adminName').textContent = 'Administrador';
+                
+                // Mostrar dashboard
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                
+                // Cargar instituciones
+                loadInstitutions();
+            } else {
+                alert('Por favor ingresa tus credenciales');
+            }
+        });
+        
+        // Manejo del formulario de registro
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obtener valores del formulario
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validar que las contraseñas coincidan
+            if (password !== confirmPassword) {
+                alert('Las contraseñas no coinciden');
+                return;
+            }
+            
+            // Validar que todos los campos estén completos
+            if (name && email && password) {
+                // Mostrar información del administrador
+                document.getElementById('adminName').textContent = name;
+                
+                // Mostrar dashboard
+                document.getElementById('registerContainer').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                
+                // Cargar instituciones
+                loadInstitutions();
+            } else {
+                alert('Por favor completa todos los campos');
+            }
+        });
+        
+        // Función para cambiar entre pestañas
+        function showTab(tabName) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar la pestaña seleccionada
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Actualizar estado de las pestañas
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Activar la pestaña correspondiente
+            document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
+        }
+        
+        // Agregar funcionalidad a las pestañas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+                showTab(tabName);
+            });
+        });
+        
+        // Datos de ejemplo para las instituciones
+        const institutionsData = [
+            {
+                name: "Universidad Nacional",
+                mathScore: 87,
+                languageScore: 82,
+                students: 1240,
+                teachers: 85,
+                color: "#1d2b64"
+            },
+            {
+                name: "Instituto Tecnológico",
+                mathScore: 91,
+                languageScore: 78,
+                students: 980,
+                teachers: 65,
+                color: "#3a56c4"
+            },
+            {
+                name: "Colegio Santa María",
+                mathScore: 79,
+                languageScore: 85,
+                students: 720,
+                teachers: 42,
+                color: "#f8cdda"
+            },
+            {
+                name: "Centro Educativo Sur",
+                mathScore: 84,
+                languageScore: 80,
+                students: 1150,
+                teachers: 78,
+                color: "#d9534f"
+            },
+            {
+                name: "Academia del Norte",
+                mathScore: 92,
+                languageScore: 88,
+                students: 680,
+                teachers: 38,
+                color: "#5bc0de"
+            },
+            {
+                name: "Instituto de Ciencias",
+                mathScore: 76,
+                languageScore: 74,
+                students: 890,
+                teachers: 52,
+                color: "#5cb85c"
+            },
+            {
+                name: "Escuela Profesional",
+                mathScore: 85,
+                languageScore: 83,
+                students: 1020,
+                teachers: 68,
+                color: "#f0ad4e"
+            },
+            {
+                name: "Centro de Estudios",
+                mathScore: 89,
+                languageScore: 86,
+                students: 760,
+                teachers: 45,
+                color: "#6f42c1"
+            }
+        ];
+        
+        // Función para cargar las instituciones
+        function loadInstitutions() {
+            const container = document.getElementById('institutionsContainer');
+            container.innerHTML = '';
+            
+            let totalScore = 0;
+            let totalStudents = 0;
+            let totalUsers = 0;
+            
+            institutionsData.forEach(institution => {
+                totalScore += (institution.mathScore + institution.languageScore) / 2;
+                totalStudents += institution.students;
+                totalUsers += institution.students + institution.teachers;
+                
+                const card = document.createElement('div');
+                card.className = 'institution-card';
+                card.innerHTML = `
+                    <div class="institution-header" style="background: linear-gradient(135deg, ${institution.color}, #1d2b64);">
+                        <h3>${institution.name}</h3>
+                        <p>${institution.students} estudiantes | ${institution.teachers} docentes</p>
+                    </div>
+                    <div class="institution-body">
+                        <div class="progress-container math-progress">
+                            <div class="progress-label">
+                                <span>Matemáticas</span>
+                                <span>${institution.mathScore}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: ${institution.mathScore}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-container language-progress">
+                            <div class="progress-label">
+                                <span>Comunicación y Lenguaje</span>
+                                <span>${institution.languageScore}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: ${institution.languageScore}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="stats">
+                            <div class="stat-item">
+                                <div class="stat-value">${institution.students}</div>
+                                <div class="stat-label">Estudiantes</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${institution.teachers}</div>
+                                <div class="stat-label">Docentes</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${Math.round((institution.mathScore + institution.languageScore) / 2)}%</div>
+                                <div class="stat-label">Promedio</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            
+            // Actualizar estadísticas generales
+            document.getElementById('institutionsCount').textContent = institutionsData.length;
+            document.getElementById('averageScore').textContent = `${Math.round(totalScore / institutionsData.length)}%`;
+            document.getElementById('usersCount').textContent = totalUsers.toLocaleString();
+        }
+        
+        // Cargar instituciones al iniciar (para demostración)
+        window.onload = function() {
+            // En una implementación real, esto se haría después del login
+            // loadInstitutions();
+        };
+    </script>
+</body>
+</html>
