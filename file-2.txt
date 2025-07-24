@@ -1,2 +1,4 @@
 Nuevo archivo nuero 2
 Mi nombre es Dany esto es Desarrollo Web
+Aprendiendo el sistema de control de versiones de git
+y como crear un repositorio en GitHub.
