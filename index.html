@@ -17,7 +17,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #17bebb;
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -105,6 +105,30 @@
             font-weight: 700;
             margin-bottom: 10px;
         }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            justify-items: center;
+            margin: 0 auto;
+            max-width: 1100px;
+        }
+        .cards .col-md-3 {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .card.role-card {
+            width: 90%;
+            max-width: 500px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .cards {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -115,59 +139,65 @@
                 <h1 class="text-white display-4 fw-bold">Plataforma Educativa</h1>
                 <p class="text-white fs-5">Selecciona tu rol para comenzar</p>
             </div>
-            
-            <div class="col-md-3 mb-4">
-                <div class="card role-card h-100">
-                    <div class="card-body text-center">
-                        <div class="mb-3">
-                            <i class="fas fa-user-shield fa-3x text-primary"></i>
+
+            <div class="cards">
+                <div class="col-md-3 mb-4">
+                    <div class="card role-card h-100" style="background-color: #D4F4DD; width: 500px;">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-user-shield fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Administrador</h5>
+                            <p class="card-text">Gestiona instituciones y monitorea el sistema</p>
+                            <br>
+                            <a href="admin.html" style="padding: .5rem; background-color: #D62246; border-radius: 10px; color: #ffffff; text-decoration: none;">Administrador</a>
                         </div>
-                        <h5 class="card-title">Administrador</h5>
-                        <p class="card-text">Gestiona instituciones y monitorea el sistema</p>
-                        <a href="admin.html" style="padding: .5rem; background-color: skyblue; border-radius: 10px; color: black; text-decoration: none;">Administrador</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4">
+                    <div class="card role-card h-100" style="background-color: #D4F4DD; width: 500px;">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-building fa-3x text-success"></i>
+                            </div>
+                            <h5 class="card-title">Director</h5>
+                            <p class="card-text">Supervisa el progreso académico</p>
+                            <br>
+                            <a href="director.html" style="padding: .5rem; background-color: #D62246; border-radius: 10px; color: rgb(255, 255, 255); text-decoration: none;">Director</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4">
+                    <div class="card role-card h-100" style="background-color: #D4F4DD; width: 500px;">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-chalkboard-teacher fa-3x text-warning"></i>
+                            </div>
+                            <h5 class="card-title">Maestro</h5>
+                            <p class="card-text">Gestiona estudiantes y cursos</p>
+                            <br>
+                            <a href="maestro.html" style="padding: .5rem; background-color: #D62246; border-radius: 10px; color: rgb(255, 255, 255); text-decoration: none;">Maestro</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4">
+                    <div class="card role-card h-100" style="background-color: #D4F4DD; width: 500px;">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-user-graduate fa-3x text-info"></i>
+                            </div>
+                            <h5 class="card-title">Alumno</h5>
+                            <p class="card-text">Accede a tus cursos y evaluaciones</p>
+                            <br>
+                            <a href="estudiante.html" style="padding: .5rem; background-color: #D62246; border-radius: 10px; color: rgb(255, 255, 255); text-decoration: none;">Estudiante</a>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-3 mb-4">
-                <div class="card role-card h-100">
-                    <div class="card-body text-center">
-                        <div class="mb-3">
-                            <i class="fas fa-building fa-3x text-success"></i>
-                        </div>
-                        <h5 class="card-title">Director</h5>
-                        <p class="card-text">Supervisa el progreso académico</p>
-                        <a href="director.html" style="padding: .5rem; background-color: skyblue; border-radius: 10px; color: black; text-decoration: none;">Director</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-3 mb-4">
-                <div class="card role-card h-100">
-                    <div class="card-body text-center">
-                        <div class="mb-3">
-                            <i class="fas fa-chalkboard-teacher fa-3x text-warning"></i>
-                        </div>
-                        <h5 class="card-title">Maestro</h5>
-                        <p class="card-text">Gestiona estudiantes y cursos</p>
-                        <br>
-                        <a href="maestro.html" style="padding: .5rem; background-color: skyblue; border-radius: 10px; color: black; text-decoration: none;">Maestro</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-3 mb-4">
-                <div class="card role-card h-100">
-                    <div class="card-body text-center">
-                        <div class="mb-3">
-                            <i class="fas fa-user-graduate fa-3x text-info"></i>
-                        </div>
-                        <h5 class="card-title">Alumno</h5>
-                        <p class="card-text">Accede a tus cursos y evaluaciones</p>
-                        <a href="estudiante.html" style="padding: .5rem; background-color: skyblue; border-radius: 10px; color: black; text-decoration: none;">Estudiante</a>
-                    </div>
-                </div>
-            </div>
         </div>
 
 
